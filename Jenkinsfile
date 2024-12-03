@@ -1,6 +1,6 @@
 pipeline {
     environment {
-        DOCKERHUB_REGISTRY = 'todo-app-dockerhub-registry'
+        DOCKERHUB_REGISTRY = credentials('todo-app-dockerhub-registry')
         registryCredential = 'dockerHub'
     }
 
