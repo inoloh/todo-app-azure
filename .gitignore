@@ -1,6 +1,9 @@
 # dotenv local
 .env.dev
 
+# macOs specific
+.DS_Store
+
 # Logs
 logs
 *.log
