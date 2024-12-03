@@ -37,7 +37,7 @@ pipeline {
         stage('Build Docker image for dockerhub') {
             steps {
                 script {
-                    dockerImage = docker.build DOCKERHUB_REGISTRY + ":$env.BUILD_NUMBER"
+                    dockerImage = docker.build("$env.DOCKERHUB_REGISTRY:$env.BUILD_NUMBER")
                 }
             }
         }
