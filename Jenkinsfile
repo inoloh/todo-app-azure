@@ -1,7 +1,7 @@
 pipeline {
     environment {
-        DOCKERHUB_REGISTRY = credentials('todo-app-dockerhub-registry')
-        registryCredential = 'dockerHub'
+        DOCKERHUB_REGISTRY = 'todo-app-dockerhub-registry'
+        registryCredentials = 'dockerHub'
     }
 
     agent any
@@ -37,14 +37,14 @@ pipeline {
         stage('Build Docker image for dockerhub') {
             steps {
                 script {
-                    dockerImage = docker.build("$env.DOCKERHUB_REGISTRY:$env.BUILD_NUMBER")
+                    dockerImage = docker.build DOCKERHUB_REGISTRY + ":$env.BUILD_NUMBER"
                 }
             }
         }
         stage('Deploy Docker image to dockerhub') {
             steps {
                 script {
-                    docker.withRegistry( '', registryCredential ) {
+                    docker.withRegistry( '', registryCredentials ) {
                         dockerImage.push()
                     }
                 }
