@@ -52,8 +52,8 @@ pipeline {
         }
         stage('Clean up images') {
             steps {
-                sh "docker rmi $registry:$BUILD_NUMBER" 
-                sh "docker rmi $registry:latest" 
+                sh "docker rmi $env.DOCKERHUB_REGISTRY:$env.BUILD_NUMBER" 
+                sh "docker rmi $env.DOCKERHUB_REGISTRY:latest" 
 
                 sh "docker image prune -a -f"
             }
