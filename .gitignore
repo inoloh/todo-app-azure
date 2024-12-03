@@ -1,3 +1,6 @@
+# dotenv local
+.env.dev
+
 # Logs
 logs
 *.log
