@@ -52,10 +52,9 @@ pipeline {
         }
         stage('Clean up images') {
             steps {
-                // Remove specific tagged images 
                 sh "docker rmi $registry:$BUILD_NUMBER" 
                 sh "docker rmi $registry:latest" 
-                // Remove all unused images 
+
                 sh "docker image prune -a -f"
             }
         }
