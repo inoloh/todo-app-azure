@@ -1,0 +1,21 @@
+extends layout 
+block content 
+    br
+    br
+    h1 User Profile 
+    if profile 
+        p Name: #{profile.displayName} 
+        p Email: #{profile.mail || profile.userPrincipalName} 
+    else 
+        p No profile data available.
+    //- p Name: #{userName}
+    //- p Email: #{userEmail}
+    //- p Profile Picture:
+    //-     if userProfilePicture
+    //-         img(src=`${userProfilePicture}`, alt='Profile Picture')
+    //-     else
+    //-         p No profile picture available
+    //- h2 Achievements
+    //- ul
+    //-     each achievement in userAchievements
+    //-         li= achievement

@@ -1,0 +1,62 @@
+extends layout
+block content
+     h1 #{title}
+     if !isAuthenticated
+      p Welcome
+      a(href='/auth/signin') Sign in
+     else
+      br
+      form(action="/completetask", method="post")
+        table.table.table-striped.table-bordered
+          tr
+            td Name
+            td Category
+            td Date
+            td Complete
+            td Due date
+          if (typeof tasks === "undefined")
+            tr
+              td
+          else
+            each task in tasks
+              tr
+                td #{task.name}
+                td #{task.category}
+                - var date  = new Date(task.date);
+                - var day   = date.getDate();
+                - var month = date.getMonth() + 1;
+                - var year  = date.getFullYear();
+                td #{month + "/" + day + "/" + year}
+                td
+                  if(task.completed) 
+                   input(type="checkbox", name="#{task.id}", value="#{!task.completed}", checked=task.completed)
+                  else
+                   input(type="checkbox", name="#{task.id}", value="#{!task.completed}", checked=task.completed)
+                td #{task.dueDate}
+        button.btn.btn-primary(type="submit") Update tasks
+      hr
+      form.well(action="/addtask", method="post")
+        .form-group
+          label Item Name:
+          input.form-control(name="name", type="textbox")
+        .form-group
+          label Item Category:
+          input.form-control(name="category", type="textbox")
+        .form-group
+          label Item Due date:
+          input.form-control(name="dueDate", type="date")
+        br
+        br
+        button.btn(type="submit") Add item
+
+      // Modal 
+      div#myModal.modal.fade(role='dialog') 
+        div.modal-dialog 
+          div.modal-content 
+            div.modal-header 
+              h4.modal-title Message 
+              button.close(type='button', data-dismiss='modal') &times;
+            div.modal-body 
+              p#modalMessage 
+            div.modal-footer 
+              button.btn.btn-default(type='button', data-dismiss='modal') Close
