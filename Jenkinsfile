@@ -1,7 +1,7 @@
 pipeline {
     environment {
         DOCKERHUB_REGISTRY = credentials('todo-app-dockerhub-registry')
-        DOCKERHUB_ID = credentials('dockerHub')
+        DOCKERHUB_CREDENTIALS = credentials('dockerHub')
     }
 
     agent any
@@ -38,6 +38,15 @@ pipeline {
             steps {
                 script {
                     dockerImage = docker.build DOCKERHUB_REGISTRY + ":$BUILD_NUMBER"
+                }
+            }
+        }
+        stage('Deploy Docker image to dockerhub') {
+            steps {
+                script {
+                    docker.withRegistry( '', DOCKERHUB_CREDENTIALS ) {
+                        dockerImage.push()
+                    }
                 }
             }
         }
