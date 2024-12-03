@@ -22,7 +22,7 @@ pipeline {
         stage('Build Docker image for dockerhub') {
             steps {
                 script {
-                    dockerImage = docker.build("$env.DOCKERHUB_REGISTRY:$env.BUILD_NUMBER", "--platform linux/amd64")
+                    dockerImage = docker.build("$env.DOCKERHUB_REGISTRY:$env.BUILD_NUMBER")
                 }
             }
         }
