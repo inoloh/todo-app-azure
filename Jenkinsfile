@@ -1,7 +1,7 @@
 pipeline {
     environment {
         DOCKERHUB_REGISTRY = 'todo-app-dockerhub-registry'
-        registryCredentials = 'dockerHub'
+        registryCredential = 'dockerHub'
     }
 
     agent any
@@ -44,7 +44,7 @@ pipeline {
         stage('Deploy Docker image to dockerhub') {
             steps {
                 script {
-                    docker.withRegistry( '', registryCredentials ) {
+                    docker.withRegistry( '', registryCredential ) {
                         dockerImage.push()
                     }
                 }
