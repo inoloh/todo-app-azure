@@ -1,4 +1,9 @@
 pipeline {
+    environment {
+        DOCKERHUB_REGISTRY = credentials('todo-app-dockerhub-registry')
+        DOCKERHUB_ID = credentials('dockerHub')
+    }
+
     agent any
 
     stages {
@@ -22,9 +27,18 @@ pipeline {
                     '''
                 }
             }
-        stage('Build Docker image') {
+        stage('Build Docker image in script') {
             steps {
-                sh 'docker build -t helenazzz-app .'
+                sh '''
+                    docker build -t helenazzz-app .
+                    '''
+            }
+        }
+        stage('Build Docker image in script') {
+            steps {
+                script {
+                    dockerImage = docker.build DOCKERHUB_REGISTRY + ":$BUILD_NUMBER"
+                }
             }
         }
     }
