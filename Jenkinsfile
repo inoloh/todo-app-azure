@@ -12,32 +12,17 @@ pipeline {
                 echo 'Hello World again!!'
             }
         }
-        stage('Build') {
-            agent {
-                docker {
-                    image 'node:18-alpine'
-                    reuseNode true
-                    }
-                }
-                steps {
-                    sh '''
-                        ls -la
-                        node --version
-                        npm --version
-                    '''
-                }
-            }
-        stage('Build Docker image in script') {
-            steps {
-                sh '''
-                    docker build -t helenazzz-app .
-                    '''
-            }
-        }
+        // stage('Build Docker image in script') {
+        //     steps {
+        //         sh '''
+        //             docker build -t helenazzz-app .
+        //             '''
+        //     }
+        // }
         stage('Build Docker image for dockerhub') {
             steps {
                 script {
-                    dockerImage = docker.build("$env.DOCKERHUB_REGISTRY:$env.BUILD_NUMBER")
+                    dockerImage = docker.build("$env.DOCKERHUB_REGISTRY:$env.BUILD_NUMBER", "--platform linux/amd64")
                 }
             }
         }
@@ -53,7 +38,7 @@ pipeline {
         stage('Clean up images') {
             steps {
                 sh "docker rmi $env.DOCKERHUB_REGISTRY:$env.BUILD_NUMBER" 
-                sh "docker image prune -a -f"
+                // sh "docker image prune -a -f"
             }
         }
     }
