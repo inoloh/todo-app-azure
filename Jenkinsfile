@@ -50,5 +50,10 @@ pipeline {
                 }
             }
         }
+        stage('Looking at what we have') {
+            steps {
+                sh 'ls -la'
+            }
+        }
     }
 }
