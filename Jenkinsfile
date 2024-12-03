@@ -37,14 +37,14 @@ pipeline {
         stage('Build Docker image for dockerhub') {
             steps {
                 script {
-                    dockerImage = docker.build DOCKERHUB_REGISTRY + ":$BUILD_NUMBER"
+                    dockerImage = docker.build("$env.DOCKERHUB_REGISTRY:$env.BUILD_NUMBER")
                 }
             }
         }
         stage('Deploy Docker image to dockerhub') {
             steps {
                 script {
-                    docker.withRegistry( 'https://registry.hub.docker.com', DOCKERHUB_CREDENTIALS ) {
+                    docker.withRegistry( '', "$env.DOCKERHUB_CREDENTIALS" ) {
                         dockerImage.push()
                     }
                 }
