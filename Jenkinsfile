@@ -1,6 +1,6 @@
 pipeline {
     environment {
-        DOCKERHUB_REGISTRY = credentials('dockerhubRegistryToken')
+        DOCKERHUB_REGISTRY = credentials('dockerhubRegistry')
         REGISTRY_CRED = 'dockerHub'
         AZURE_CRED = credentials('azureServicePrincipal')
         AZURE_CONFIG_DIR = '/tmp/.azure'
