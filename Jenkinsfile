@@ -9,28 +9,28 @@ pipeline {
     agent any
 
     stages {
-        stage('Build image') {
-            steps {
-                script {
-                    dockerImage = docker.build("$env.DOCKERHUB_REGISTRY:$env.BUILD_NUMBER", "--platform linux/amd64 .")
-                }
-            }
-        }
-        stage('Push image to DockerHub') {
-            steps {
-                script {
-                    docker.withRegistry( '', registryCredential ) {
-                        dockerImage.push()
-                    }
-                }
-            }
-        }
-        stage('Clean up images') {
-            steps {
-                sh "docker rmi $env.DOCKERHUB_REGISTRY:$env.BUILD_NUMBER" 
-                // sh "docker image prune -a -f"
-            }
-        }
+        // stage('Build image') {
+        //     steps {
+        //         script {
+        //             dockerImage = docker.build("$env.DOCKERHUB_REGISTRY:$env.BUILD_NUMBER", "--platform linux/amd64 .")
+        //         }
+        //     }
+        // }
+        // stage('Push image to DockerHub') {
+        //     steps {
+        //         script {
+        //             docker.withRegistry( '', registryCredential ) {
+        //                 dockerImage.push()
+        //             }
+        //         }
+        //     }
+        // }
+        // stage('Clean up images') {
+        //     steps {
+        //         sh "docker rmi $env.DOCKERHUB_REGISTRY:$env.BUILD_NUMBER" 
+        //         // sh "docker image prune -a -f"
+        //     }
+        // }
         stage('Log into Azure CLI') {
             agent {
                 docker {
