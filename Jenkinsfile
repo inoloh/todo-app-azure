@@ -3,6 +3,7 @@ pipeline {
         DOCKERHUB_REGISTRY = credentials('todo-app-dockerhub-registry')
         REGISTRY_CRED = 'dockerHub'
         AZURE_CRED = credentials('azureServicePrincipal')
+        AZURE_CONFIG_DIR = '/tmp/.azure'
     }
 
     agent any
