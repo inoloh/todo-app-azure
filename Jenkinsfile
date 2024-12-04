@@ -1,6 +1,6 @@
 pipeline {
     environment {
-        DOCKERHUB_REGISTRY = credentials('todo-app-dockerhub-registry')
+        DOCKERHUB_REGISTRY = credentials('dockerhubRegistryToken')
         REGISTRY_CRED = 'dockerHub'
         AZURE_CRED = credentials('azureServicePrincipal')
         AZURE_CONFIG_DIR = '/tmp/.azure'
@@ -25,6 +25,7 @@ pipeline {
                 }
             }
         }
+
         stage('Clean up images') {
             steps {
                 sh "docker rmi $env.DOCKERHUB_REGISTRY:$env.BUILD_NUMBER" 
@@ -40,8 +41,7 @@ pipeline {
             }
             steps {
                 sh 'az login --service-principal -u $AZURE_CRED_CLIENT_ID -p $AZURE_CRED_CLIENT_SECRET -t $AZURE_CRED_TENANT_ID'
-                sh 'az account show'
-                sh "az webapp config container set --name helenazzz --resource-group cosmosdb --docker-custom-image-name $env.DOCKERHUB_REGISTRY:$env.BUILD_NUMBER --docker-registry-server-url https://index.docker.io/v1/"
+                sh "az webapp config container set --name helenazzz --resource-group cosmosdb --container-image-name $env.DOCKERHUB_REGISTRY:$env.BUILD_NUMBER --container-registry-url https://index.docker.io/v1/"
             }
         }
     }
