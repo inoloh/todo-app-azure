@@ -7,18 +7,6 @@ pipeline {
     agent any
 
     stages {
-        stage('HELLO') {
-            steps {
-                echo 'Hello World again!!'
-            }
-        }
-        // stage('Build Docker image in script') {
-        //     steps {
-        //         sh '''
-        //             docker build -t helenazzz-app .
-        //             '''
-        //     }
-        // }
         stage('Build Docker image for dockerhub') {
             steps {
                 script {
